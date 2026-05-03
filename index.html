@@ -1,0 +1,786 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>bussin facts — data that hits different</title>
+  <style>
+    /* ── Reset & base ── */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --white: #ffffff;
+      --off-white: #f8f8f6;
+      --border: rgba(0,0,0,0.10);
+      --text-primary: #111110;
+      --text-secondary: #6b6b68;
+      --text-tertiary: #9e9e9a;
+
+      /* Chapter accent colours */
+      --debt-light: #EEEDFE;
+      --debt-mid: #AFA9EC;
+      --debt-strong: #7F77DD;
+      --debt-dark: #534AB7;
+
+      --housing-light: #E1F5EE;
+      --housing-mid: #5DCAA5;
+      --housing-strong: #1D9E75;
+      --housing-dark: #0F6E56;
+
+      --dating-light: #FBEAF0;
+      --dating-mid: #ED93B1;
+      --dating-strong: #D4537E;
+      --dating-dark: #993556;
+
+      --radius-sm: 8px;
+      --radius-md: 12px;
+      --radius-lg: 20px;
+      --radius-pill: 100px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      color: var(--text-primary);
+      background: var(--white);
+    }
+
+    /* ── Layout ── */
+    .container {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    /* ── Sticky Nav ── */
+    .nav-wrap {
+      position: sticky;
+      top: 16px;
+      z-index: 100;
+      pointer-events: none;
+    }
+    nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      background: rgba(255,255,255,0.88);
+      backdrop-filter: blur(12px);
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-pill);
+      padding: 10px 16px;
+      pointer-events: all;
+      max-width: 720px;
+      margin: 0 auto;
+    }
+    .nav-logo {
+      font-size: 14px;
+      font-weight: 600;
+      letter-spacing: -0.01em;
+      color: var(--text-primary);
+      text-decoration: none;
+    }
+    .nav-links {
+      display: flex;
+      gap: 4px;
+    }
+    .nav-link {
+      font-size: 13px;
+      padding: 5px 14px;
+      border-radius: var(--radius-pill);
+      border: none;
+      background: transparent;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      transition: background 0.15s, color 0.15s;
+      text-decoration: none;
+    }
+    .nav-link:hover { background: rgba(0,0,0,0.05); color: var(--text-primary); }
+    .nav-link.active { background: var(--text-primary); color: white; }
+
+    /* ── Hero ── */
+    .hero {
+      text-align: center;
+      padding: 96px 0 80px;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .hero-eyebrow {
+      font-size: 11px;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+    .hero-title {
+      font-size: clamp(36px, 6vw, 56px);
+      font-weight: 500;
+      line-height: 1.15;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+    }
+    .hero-title .accent { color: var(--debt-strong); }
+    .hero-sub {
+      font-size: 18px;
+      color: var(--text-secondary);
+      max-width: 460px;
+      margin: 0 auto 32px;
+      line-height: 1.6;
+    }
+    .hero-cta {
+      display: inline-block;
+      padding: 12px 28px;
+      border-radius: var(--radius-pill);
+      border: 0.5px solid var(--border);
+      font-size: 15px;
+      font-weight: 500;
+      color: var(--text-primary);
+      cursor: pointer;
+      background: var(--white);
+      font-family: inherit;
+      text-decoration: none;
+      transition: background 0.15s;
+    }
+    .hero-cta:hover { background: var(--off-white); }
+
+    /* ── Chapter layout ── */
+    .chapter {
+      padding: 80px 0;
+      border-bottom: 0.5px solid var(--border);
+    }
+    .chapter-tag {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      font-weight: 600;
+      letter-spacing: 0.06em;
+      text-transform: uppercase;
+      padding: 5px 12px;
+      border-radius: var(--radius-pill);
+      margin-bottom: 24px;
+    }
+    .tag-debt    { background: var(--debt-light);    color: var(--debt-dark); }
+    .tag-housing { background: var(--housing-light); color: var(--housing-dark); }
+    .tag-dating  { background: var(--dating-light);  color: var(--dating-dark); }
+
+    /* ── Big stat ── */
+    .chapter-stat { margin-bottom: 24px; }
+    .stat-number {
+      font-size: clamp(48px, 8vw, 72px);
+      font-weight: 500;
+      line-height: 1;
+      letter-spacing: -0.03em;
+      margin-bottom: 6px;
+      /* Animated in via JS — starts at 0 */
+    }
+    .stat-debt    { color: var(--debt-strong); }
+    .stat-housing { color: var(--housing-strong); }
+    .stat-dating  { color: var(--dating-strong); }
+    .stat-label {
+      font-size: 16px;
+      color: var(--text-secondary);
+    }
+
+    .chapter-desc {
+      font-size: 17px;
+      color: var(--text-secondary);
+      line-height: 1.75;
+      margin-bottom: 32px;
+      max-width: 580px;
+    }
+
+    /* ── Infographic card ── */
+    .infographic-card {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 24px;
+      background: var(--white);
+      margin-bottom: 16px;
+    }
+    .card-label {
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text-tertiary);
+      margin-bottom: 20px;
+    }
+
+    /* ── Bar chart rows ── */
+    .bar-row {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 12px;
+    }
+    .bar-row:last-child { margin-bottom: 0; }
+    .bar-name {
+      font-size: 13px;
+      color: var(--text-secondary);
+      width: 130px;
+      flex-shrink: 0;
+    }
+    .bar-track {
+      flex: 1;
+      height: 8px;
+      background: var(--off-white);
+      border-radius: 4px;
+      overflow: hidden;
+    }
+    .bar-fill {
+      height: 100%;
+      border-radius: 4px;
+      width: 0; /* animated in */
+      transition: width 1s cubic-bezier(0.25, 1, 0.5, 1);
+    }
+    .bar-val {
+      font-size: 13px;
+      font-weight: 500;
+      color: var(--text-primary);
+      width: 60px;
+      text-align: right;
+      flex-shrink: 0;
+    }
+    .bar-debt    { background: var(--debt-mid); }
+    .bar-housing { background: var(--housing-mid); }
+    .bar-dating  { background: var(--dating-mid); }
+
+    /* ── Metric cards ── */
+    .two-col {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin-bottom: 16px;
+    }
+    .metric-card {
+      background: var(--off-white);
+      border-radius: var(--radius-sm);
+      padding: 16px;
+    }
+    .metric-label {
+      font-size: 12px;
+      color: var(--text-tertiary);
+      margin-bottom: 4px;
+    }
+    .metric-val {
+      font-size: 24px;
+      font-weight: 500;
+      color: var(--text-primary);
+      letter-spacing: -0.02em;
+    }
+
+    /* ── Personalise widget ── */
+    .personalise-bar {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      padding: 20px 24px;
+      background: var(--off-white);
+    }
+    .personalise-label {
+      font-size: 13px;
+      color: var(--text-secondary);
+      margin-bottom: 12px;
+    }
+    .pills {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .pill {
+      font-size: 13px;
+      padding: 6px 14px;
+      border-radius: var(--radius-pill);
+      border: 0.5px solid var(--border);
+      background: var(--white);
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-family: inherit;
+      transition: all 0.15s;
+    }
+    .pill:hover { border-color: rgba(0,0,0,0.2); color: var(--text-primary); }
+    .pill.active-debt    { background: var(--debt-light);    color: var(--debt-dark);    border-color: var(--debt-mid); }
+    .pill.active-housing { background: var(--housing-light); color: var(--housing-dark); border-color: var(--housing-mid); }
+    .pill.active-dating  { background: var(--dating-light);  color: var(--dating-dark);  border-color: var(--dating-mid); }
+
+    /* Result panel — shown after pill selection */
+    .result-panel {
+      margin-top: 16px;
+      padding: 16px;
+      border-radius: var(--radius-sm);
+      background: var(--white);
+      border: 0.5px solid var(--border);
+      font-size: 14px;
+      color: var(--text-secondary);
+      display: none; /* shown by JS */
+      line-height: 1.6;
+    }
+    .result-panel .result-headline {
+      font-size: 20px;
+      font-weight: 500;
+      color: var(--text-primary);
+      margin-bottom: 4px;
+      letter-spacing: -0.01em;
+    }
+
+    /* ── Scroll hint ── */
+    .scroll-hint {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 11px;
+      color: var(--text-tertiary);
+      margin-top: 12px;
+    }
+    .scroll-dot {
+      width: 4px;
+      height: 4px;
+      border-radius: 50%;
+      background: var(--text-tertiary);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+    /* ── Footer ── */
+    footer {
+      padding: 48px 0;
+      text-align: center;
+    }
+    footer p {
+      font-size: 13px;
+      color: var(--text-tertiary);
+    }
+
+    /* ── Scroll animation trigger ── */
+    .animate-on-scroll { opacity: 0; transform: translateY(16px); transition: opacity 0.6s, transform 0.6s; }
+    .animate-on-scroll.visible { opacity: 1; transform: none; }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<div class="nav-wrap">
+  <div class="container">
+    <nav>
+      <a class="nav-logo" href="#">bussin facts</a>
+      <div class="nav-links">
+        <a class="nav-link" href="#debt">debt</a>
+        <a class="nav-link" href="#housing">housing</a>
+        <a class="nav-link" href="#dating">dating</a>
+      </div>
+    </nav>
+  </div>
+</div>
+
+<!-- HERO -->
+<div class="container">
+  <section class="hero">
+    <p class="hero-eyebrow">data that hits different</p>
+    <h1 class="hero-title">the stuff no one<br>told you <span class="accent">in school</span></h1>
+    <p class="hero-sub">real data. real examples. interactive stories about the issues actually shaping gen z lives.</p>
+    <a class="hero-cta" href="#debt">scroll to start ↓</a>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     CHAPTER 1 — STUDENT DEBT & CAREERS
+     ══════════════════════════════════════ -->
+<div class="container">
+  <section class="chapter" id="debt">
+    <div class="chapter-tag tag-debt">chapter 1 — student debt &amp; careers</div>
+
+    <div class="chapter-stat animate-on-scroll">
+      <!-- TODO: Replace with verified figure. Source: Student Loans Company / IFS -->
+      <div class="stat-number stat-debt" data-target="45800" data-prefix="£" data-format="currency">£0</div>
+      <div class="stat-label">average student debt on graduation day (England, 2024)</div>
+    </div>
+
+    <p class="chapter-desc animate-on-scroll">
+      your degree cost is only half the story. the career you choose determines whether
+      that debt follows you for 3 years — or 30. scroll through each career to see the real picture.
+    </p>
+
+    <!-- BAR CHART: years to repay by career -->
+    <!-- TODO: Replace percentages + values with verified data from IFS/SLC graduate outcomes report -->
+    <div class="infographic-card animate-on-scroll" id="debt-chart">
+      <div class="card-label">estimated years to clear debt — by starting career</div>
+
+      <div class="bar-row">
+        <span class="bar-name">software engineer</span>
+        <div class="bar-track"><div class="bar-fill bar-debt" data-width="18"></div></div>
+        <span class="bar-val">~3 yrs</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">nurse</span>
+        <div class="bar-track"><div class="bar-fill bar-debt" data-width="45"></div></div>
+        <span class="bar-val">~8 yrs</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">teacher</span>
+        <div class="bar-track"><div class="bar-fill bar-debt" data-width="60"></div></div>
+        <span class="bar-val">~11 yrs</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">social worker</span>
+        <div class="bar-track"><div class="bar-fill bar-debt" data-width="78"></div></div>
+        <span class="bar-val">~14 yrs</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">artist / creative</span>
+        <div class="bar-track"><div class="bar-fill bar-debt" data-width="95"></div></div>
+        <span class="bar-val">30+ yrs</span>
+      </div>
+
+      <div class="scroll-hint"><div class="scroll-dot"></div> bars animate as section enters view</div>
+    </div>
+
+    <!-- PERSONALISE: pick your career -->
+    <div class="personalise-bar animate-on-scroll">
+      <div class="personalise-label">pick your path — see your repayment timeline ↓</div>
+      <div class="pills" id="debt-pills">
+        <!-- TODO: Wire each pill to a data object with: startingSalary, avgSalaryGrowth, repayYears, monthlyRepayment -->
+        <button class="pill" data-career="software-engineer">software engineer</button>
+        <button class="pill" data-career="nurse">nurse</button>
+        <button class="pill" data-career="teacher">teacher</button>
+        <button class="pill" data-career="lawyer">lawyer</button>
+        <button class="pill" data-career="artist">artist / creative</button>
+        <button class="pill" data-career="journalist">journalist</button>
+        <button class="pill" data-career="social-worker">social worker</button>
+        <button class="pill" data-career="marketing">marketing</button>
+      </div>
+      <div class="result-panel" id="debt-result">
+        <div class="result-headline" id="debt-result-headline"></div>
+        <div id="debt-result-body"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     CHAPTER 2 — HOUSING & RENT CRISIS
+     ══════════════════════════════════════ -->
+<div class="container">
+  <section class="chapter" id="housing">
+    <div class="chapter-tag tag-housing">chapter 2 — housing &amp; rent crisis</div>
+
+    <div class="chapter-stat animate-on-scroll">
+      <!-- TODO: Source from ONS House Price Statistics / Nationwide index -->
+      <div class="stat-number stat-housing" data-target="9" data-suffix="x" data-format="multiplier">0x</div>
+      <div class="stat-label">average home now costs 9× the average salary (up from 4× in 2000)</div>
+    </div>
+
+    <p class="chapter-desc animate-on-scroll">
+      in 2000, saving for a deposit took around 3 years on an average salary.
+      today, on the same calculation, it takes over 10. something broke — and it wasn't you.
+    </p>
+
+    <!-- METRIC CARDS -->
+    <!-- TODO: Replace with current ONS / Rightmove / Zoopla verified figures -->
+    <div class="two-col animate-on-scroll">
+      <div class="metric-card">
+        <div class="metric-label">london avg rent (1 bed, 2024)</div>
+        <div class="metric-val">£2,100/mo</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">median grad salary (UK, 2024)</div>
+        <div class="metric-val">£28,000</div>
+      </div>
+    </div>
+
+    <!-- BAR CHART: rent as % of take-home by city -->
+    <!-- TODO: Replace with verified figures (Zoopla rental market report / SpareRoom index) -->
+    <div class="infographic-card animate-on-scroll" id="housing-chart">
+      <div class="card-label">rent as % of median take-home pay — by city</div>
+
+      <div class="bar-row">
+        <span class="bar-name">London</span>
+        <div class="bar-track"><div class="bar-fill bar-housing" data-width="90"></div></div>
+        <span class="bar-val">72%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">Manchester</span>
+        <div class="bar-track"><div class="bar-fill bar-housing" data-width="58"></div></div>
+        <span class="bar-val">46%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">Bristol</span>
+        <div class="bar-track"><div class="bar-fill bar-housing" data-width="55"></div></div>
+        <span class="bar-val">44%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">Birmingham</span>
+        <div class="bar-track"><div class="bar-fill bar-housing" data-width="52"></div></div>
+        <span class="bar-val">42%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">Leeds</span>
+        <div class="bar-track"><div class="bar-fill bar-housing" data-width="44"></div></div>
+        <span class="bar-val">35%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">Glasgow</span>
+        <div class="bar-track"><div class="bar-fill bar-housing" data-width="36"></div></div>
+        <span class="bar-val">29%</span>
+      </div>
+
+      <div class="scroll-hint"><div class="scroll-dot"></div> animates city by city on scroll</div>
+    </div>
+
+    <!-- PERSONALISE: pick your city -->
+    <div class="personalise-bar animate-on-scroll">
+      <div class="personalise-label">pick your city — see what's actually left after rent ↓</div>
+      <div class="pills" id="housing-pills">
+        <!-- TODO: Wire to data object per city: medianRent, medianSalary, leftoverMonthly, depositYears -->
+        <button class="pill" data-city="london">london</button>
+        <button class="pill" data-city="manchester">manchester</button>
+        <button class="pill" data-city="bristol">bristol</button>
+        <button class="pill" data-city="birmingham">birmingham</button>
+        <button class="pill" data-city="leeds">leeds</button>
+        <button class="pill" data-city="glasgow">glasgow</button>
+        <button class="pill" data-city="edinburgh">edinburgh</button>
+        <button class="pill" data-city="nottingham">nottingham</button>
+      </div>
+      <div class="result-panel" id="housing-result">
+        <div class="result-headline" id="housing-result-headline"></div>
+        <div id="housing-result-body"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- ══════════════════════════════════════
+     CHAPTER 3 — DATING & LONELINESS
+     ══════════════════════════════════════ -->
+<div class="container">
+  <section class="chapter" id="dating">
+    <div class="chapter-tag tag-dating">chapter 3 — dating &amp; relationships</div>
+
+    <div class="chapter-stat animate-on-scroll">
+      <!-- TODO: Source — Pew Research / ONS loneliness survey -->
+      <div class="stat-number stat-dating" data-target="63" data-suffix="%" data-format="percent">0%</div>
+      <div class="stat-label">of gen z men haven't been on a date in the past year (US, Pew 2023)</div>
+    </div>
+
+    <p class="chapter-desc animate-on-scroll">
+      dating apps promised to fix everything. instead, loneliness is at record highs across
+      every age group — but hits gen z hardest. the data on who's connecting, who isn't,
+      and why, is bleak. and fascinating.
+    </p>
+
+    <!-- METRIC CARDS -->
+    <!-- TODO: Replace with verified figures (Bumble / Tinder transparency reports, ONS) -->
+    <div class="two-col animate-on-scroll">
+      <div class="metric-card">
+        <div class="metric-label">avg monthly spend on dating apps</div>
+        <div class="metric-val">£47</div>
+      </div>
+      <div class="metric-card">
+        <div class="metric-label">avg % of right-swipes that reply</div>
+        <div class="metric-val">~8%</div>
+      </div>
+    </div>
+
+    <!-- BAR CHART: loneliness by age -->
+    <!-- TODO: Replace with ONS / Campaign to End Loneliness verified figures by age band -->
+    <div class="infographic-card animate-on-scroll" id="dating-chart">
+      <div class="card-label">self-reported loneliness by age group — UK, 2024</div>
+
+      <div class="bar-row">
+        <span class="bar-name">16–24</span>
+        <div class="bar-track"><div class="bar-fill bar-dating" data-width="88"></div></div>
+        <span class="bar-val">55%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">25–34</span>
+        <div class="bar-track"><div class="bar-fill bar-dating" data-width="70"></div></div>
+        <span class="bar-val">44%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">35–44</span>
+        <div class="bar-track"><div class="bar-fill bar-dating" data-width="48"></div></div>
+        <span class="bar-val">30%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">45–54</span>
+        <div class="bar-track"><div class="bar-fill bar-dating" data-width="35"></div></div>
+        <span class="bar-val">22%</span>
+      </div>
+      <div class="bar-row">
+        <span class="bar-name">55+</span>
+        <div class="bar-track"><div class="bar-fill bar-dating" data-width="28"></div></div>
+        <span class="bar-val">18%</span>
+      </div>
+
+      <div class="scroll-hint"><div class="scroll-dot"></div> taps through anonymised real experiences</div>
+    </div>
+
+    <!-- PERSONALISE: app quiz -->
+    <div class="personalise-bar animate-on-scroll">
+      <div class="personalise-label">which app do you use? see what the data says about it ↓</div>
+      <div class="pills" id="dating-pills">
+        <!-- TODO: Wire to data per app: avgMonthlySpend, matchRate, replyRate, avgTimeToDate -->
+        <button class="pill" data-app="tinder">tinder</button>
+        <button class="pill" data-app="hinge">hinge</button>
+        <button class="pill" data-app="bumble">bumble</button>
+        <button class="pill" data-app="apps">no apps</button>
+        <button class="pill" data-app="irl">irl only</button>
+      </div>
+      <div class="result-panel" id="dating-result">
+        <div class="result-headline" id="dating-result-headline"></div>
+        <div id="dating-result-body"></div>
+      </div>
+    </div>
+  </section>
+</div>
+
+<!-- FOOTER -->
+<div class="container">
+  <footer>
+    <p>bussin facts · sources linked throughout · built for gen z, by gen z</p>
+    <!-- TODO: Add source footnotes / links section -->
+  </footer>
+</div>
+
+<script>
+  // ── Scroll-triggered bar animation ──────────────────────────────────────
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (!entry.isIntersecting) return;
+      const el = entry.target;
+
+      // Reveal animate-on-scroll elements
+      if (el.classList.contains('animate-on-scroll')) {
+        el.classList.add('visible');
+      }
+
+      // Animate bar fills inside infographic cards
+      if (el.classList.contains('infographic-card')) {
+        const fills = el.querySelectorAll('.bar-fill[data-width]');
+        fills.forEach((fill, i) => {
+          setTimeout(() => {
+            fill.style.width = fill.dataset.width + '%';
+          }, i * 120);
+        });
+      }
+
+      // Animate stat counters
+      const counter = el.querySelector('.stat-number[data-target]');
+      if (counter) animateCounter(counter);
+
+      observer.unobserve(el);
+    });
+  }, { threshold: 0.15 });
+
+  document.querySelectorAll('.animate-on-scroll, .infographic-card').forEach(el => observer.observe(el));
+
+  // ── Counter animation ────────────────────────────────────────────────────
+  function animateCounter(el) {
+    const target = parseFloat(el.dataset.target);
+    const prefix = el.dataset.prefix || '';
+    const suffix = el.dataset.suffix || '';
+    const format = el.dataset.format;
+    const duration = 1400;
+    const start = performance.now();
+
+    function update(now) {
+      const progress = Math.min((now - start) / duration, 1);
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+
+      if (format === 'currency') {
+        el.textContent = prefix + current.toLocaleString('en-GB');
+      } else {
+        el.textContent = prefix + current + suffix;
+      }
+
+      if (progress < 1) requestAnimationFrame(update);
+    }
+    requestAnimationFrame(update);
+  }
+
+  // ── Active nav link on scroll ────────────────────────────────────────────
+  const sections = document.querySelectorAll('.chapter');
+  const navLinks = document.querySelectorAll('.nav-link');
+
+  const sectionObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        navLinks.forEach(l => l.classList.remove('active'));
+        const active = document.querySelector(`.nav-link[href="#${entry.target.id}"]`);
+        if (active) active.classList.add('active');
+      }
+    });
+  }, { rootMargin: '-40% 0px -40% 0px' });
+
+  sections.forEach(s => sectionObserver.observe(s));
+
+  // ── Pill interactions ────────────────────────────────────────────────────
+
+  // DEBT CAREERS
+  // TODO: Replace placeholder copy with real calculated data from your research
+  const debtData = {
+    'software-engineer': { headline: 'you\'d clear your debt in ~3 years', body: 'Starting salary ~£42k. After repayments, you keep the majority of your take-home. Debt gone before 30.' },
+    'nurse':             { headline: 'you\'d spend ~8 years repaying', body: 'Starting salary ~£28k. Monthly repayments ~£30–50. NHS bursaries help but don\'t cover everything.' },
+    'teacher':           { headline: '~11 years of repayments', body: 'Starting salary ~£30k. Monthly repayments modest, but slow progress. Some debt may be written off after 30 years.' },
+    'lawyer':            { headline: '~2 years if you go corporate', body: 'City law firms start at £50–100k+. Debt clears fast. Public sector law is a different story.' },
+    'artist':            { headline: 'debt could follow you for 30+ years', body: 'Median creative salary ~£23k. Many repay nothing below the threshold — but interest keeps accumulating.' },
+    'journalist':        { headline: '~15–20 years to repay', body: 'Starting salaries ~£22–26k. Repayments start low but salary growth is slow in early career.' },
+    'social-worker':     { headline: '~14 years of repayments', body: 'Starting salary ~£28k. Vital work, underpaid relative to degree cost. Many qualify for income-based relief.' },
+    'marketing':         { headline: '~7–10 years depending on sector', body: 'Starting ~£24–30k. Tech marketing pays more. Agency roles start lower. Career progression matters.' },
+  };
+
+  setupPills('debt-pills', 'active-debt', debtData, 'debt-result', 'debt-result-headline', 'debt-result-body');
+
+  // HOUSING CITIES
+  // TODO: Replace with verified city-level rent + salary data from your research
+  const housingData = {
+    'london':     { headline: 'after rent, you keep ~£1,200/mo', body: 'Median 1-bed rent £2,100. Median take-home ~£1,900 for a fresh grad. That maths doesn\'t work.' },
+    'manchester': { headline: 'after rent, you keep ~£1,400/mo', body: 'More liveable than London. 1-bed ~£1,100. But rents rose 18% in 2023 alone.' },
+    'bristol':    { headline: 'after rent, you keep ~£1,350/mo', body: 'One of the UK\'s fastest-rising cities. 1-bed ~£1,200. Proximity to London drives prices up.' },
+    'birmingham': { headline: 'after rent, you keep ~£1,450/mo', body: 'Better value than the south. 1-bed ~£950–1,050. Growing grad economy following HS2 investment.' },
+    'leeds':      { headline: 'after rent, you keep ~£1,550/mo', body: 'Strong grad market. 1-bed ~£900. Northern alternative with real career options.' },
+    'glasgow':    { headline: 'after rent, you keep ~£1,650/mo', body: 'Best value major city in the UK right now. 1-bed ~£850. Growing tech and creative scene.' },
+    'edinburgh':  { headline: 'after rent, you keep ~£1,300/mo', body: 'Beautiful but pricey for Scotland. 1-bed ~£1,200+. Shortage of housing supply.' },
+    'nottingham': { headline: 'after rent, you keep ~£1,600/mo', body: 'Underrated city for grads. 1-bed ~£750–900. Strong university town ecosystem.' },
+  };
+
+  setupPills('housing-pills', 'active-housing', housingData, 'housing-result', 'housing-result-headline', 'housing-result-body');
+
+  // DATING APPS
+  // TODO: Replace with verified data from app transparency reports / academic studies
+  const datingData = {
+    'tinder':  { headline: 'you\'re spending ~£35/mo on average', body: 'Tinder Gold/Platinum. Match rate varies wildly by gender. Average user swipes for 90 mins/day.' },
+    'hinge':   { headline: 'designed to be deleted. rarely is.', body: 'Higher reply rates than Tinder. Average time to first date: 3 weeks. Monthly cost ~£25–55.' },
+    'bumble':  { headline: 'women message first. most don\'t.', body: 'Only ~20% of matches result in a message from either side. Premium runs ~£30/mo.' },
+    'apps':    { headline: 'you\'re in the minority — and it might be working', body: 'App non-users report higher relationship satisfaction in 2023 Pew data. Harder to meet people though.' },
+    'irl':     { headline: 'the data actually backs you up', body: 'IRL-origin relationships have higher long-term satisfaction scores. But it\'s genuinely harder in 2024.' },
+  };
+
+  setupPills('dating-pills', 'active-dating', datingData, 'dating-result', 'dating-result-headline', 'dating-result-body');
+
+  function setupPills(pillsId, activeClass, dataMap, resultId, headlineId, bodyId) {
+    const container = document.getElementById(pillsId);
+    const result = document.getElementById(resultId);
+    const headline = document.getElementById(headlineId);
+    const body = document.getElementById(bodyId);
+    if (!container) return;
+
+    container.querySelectorAll('.pill').forEach(pill => {
+      pill.addEventListener('click', () => {
+        container.querySelectorAll('.pill').forEach(p => p.className = 'pill');
+        pill.classList.add(activeClass);
+
+        const key = pill.dataset.career || pill.dataset.city || pill.dataset.app;
+        const d = dataMap[key];
+        if (d) {
+          headline.textContent = d.headline;
+          body.textContent = d.body;
+          result.style.display = 'block';
+        }
+      });
+    });
+  }
+</script>
+</body>
+</html>
