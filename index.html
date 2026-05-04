@@ -362,6 +362,55 @@
     }
 
 
+
+    /* ── Politics issue cards ── */
+    .issue-card {
+      border: 0.5px solid var(--border);
+      border-radius: var(--radius-md);
+      overflow: hidden;
+      background: var(--white);
+    }
+    .issue-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 16px;
+      cursor: pointer;
+      user-select: none;
+      gap: 12px;
+    }
+    .issue-card-header:hover { background: var(--off-white); }
+    .issue-card-left { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
+    .issue-card-accent { width: 3px; height: 36px; border-radius: 2px; flex-shrink: 0; }
+    .issue-card-title { font-size: 14px; font-weight: 500; color: var(--text-primary); }
+    .issue-card-subtitle { font-size: 12px; color: var(--text-tertiary); margin-top: 2px; }
+    .issue-card-headline { margin-left: auto; text-align: right; flex-shrink: 0; }
+    .issue-card-headline .hn { font-size: 18px; font-weight: 500; color: var(--text-primary); }
+    .issue-card-headline .hl { font-size: 11px; color: var(--text-tertiary); margin-top: 1px; max-width: 140px; line-height: 1.3; }
+    .issue-card-chevron { font-size: 12px; color: var(--text-tertiary); flex-shrink: 0; transition: transform 0.2s; }
+    .issue-card-chevron.open { transform: rotate(180deg); }
+    .issue-card-body {
+      display: none;
+      padding: 0 16px 14px;
+      border-top: 0.5px solid var(--border);
+    }
+    .issue-card-body.open { display: block; }
+    .issue-stat-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      padding: 8px 0;
+      border-bottom: 0.5px solid rgba(0,0,0,0.05);
+      gap: 12px;
+    }
+    .issue-stat-row:last-of-type { border-bottom: none; }
+    .issue-stat-text { font-size: 13px; color: var(--text-secondary); flex: 1; line-height: 1.4; }
+    .issue-stat-num { font-size: 13px; font-weight: 500; color: var(--text-primary); white-space: nowrap; flex-shrink: 0; }
+    .gender-tag { display: inline-block; font-size: 10px; font-weight: 500; padding: 2px 7px; border-radius: 20px; margin-left: 6px; vertical-align: middle; }
+    .gt-men { background: #DBEAFE; color: #1E40AF; }
+    .gt-women { background: #FBEAF0; color: #72243E; }
+    .gt-shared { background: var(--off-white); color: var(--text-tertiary); }
+    .issue-note { font-size: 12px; color: var(--text-tertiary); line-height: 1.6; margin-top: 10px; padding-top: 10px; border-top: 0.5px solid rgba(0,0,0,0.05); font-style: italic; }
     /* ── Region tabs ── */
     .region-tab {
       font-size: 12px;
@@ -754,75 +803,312 @@
     </div>
 
     <p class="chapter-desc animate-on-scroll">
-      young people have more political power than they think — and less than they should.
-      age has overtaken class as the strongest predictor of how people vote in the UK.
-      lowering the voting age to 16 adds 1.5 million new voters. the question isn't
-      whether young people have leverage — it's whether they'll use it on the right issues,
-      rather than drifting to extremes. (source: Resolution Foundation / YouGov 2025)
+      housing and the economy are the universal grievances — felt equally across gender, class and ethnicity.
+      but the issues that diverge hardest by gender are immigration, equality, and social media.
+      click any card to see the full breakdown. (source: UK Youth Poll 2025 / ITV/Savanta / YouGov / Resolution Foundation)
     </p>
 
-    <!-- METRIC CARDS — Source: Resolution Foundation intergenerational audit / YouGov -->
     <div class="two-col animate-on-scroll">
       <div class="metric-card">
-        <div class="metric-label">extra young voters if turnout returns to 2015 levels</div>
-        <div class="metric-val">3 million</div>
+        <div class="metric-label">18–25s with no trust in politics</div>
+        <div class="metric-val">2 in 3</div>
       </div>
       <div class="metric-card">
-        <div class="metric-label">grads who'd change vote for student loan reform</div>
+        <div class="metric-label">who'd change vote for student loan reform</div>
         <div class="metric-val">84%</div>
       </div>
     </div>
 
-    <!-- BAR CHART: intergenerational wealth gap issues -->
-    <!-- Source: Resolution Foundation / ONS / IFS data cited in youth challenges research -->
-    <div class="infographic-card animate-on-scroll" id="politics-chart">
-      <div class="card-label">how the system is structurally stacked — young vs old (source: Resolution Foundation)</div>
+    <!-- 1. EXPANDABLE ISSUE CARDS (rendered by JS) -->
+    <div class="animate-on-scroll" id="politics-cards" style="display:flex;flex-direction:column;gap:10px;margin-top:0"></div>
 
-      <div class="bar-row">
-        <span class="bar-name">boomers owning by 30</span>
-        <div class="bar-track"><div class="bar-fill bar-politics" data-width="85"></div></div>
-        <span class="bar-val">&gt;50%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-name">millennials owning by 30</span>
-        <div class="bar-track"><div class="bar-fill bar-politics" data-width="50"></div></div>
-        <span class="bar-val">&lt;30%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-name">under-24s below min. income standard</span>
-        <div class="bar-track"><div class="bar-fill bar-politics" data-width="86"></div></div>
-        <span class="bar-val">51.5%</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-name">wage loss vs pre-2007 trend (per year)</span>
-        <div class="bar-track"><div class="bar-fill bar-politics" data-width="65"></div></div>
-        <span class="bar-val">£11,000</span>
-      </div>
-      <div class="bar-row">
-        <span class="bar-name">youth who'd leave UK for better life</span>
-        <div class="bar-track"><div class="bar-fill bar-politics" data-width="55"></div></div>
-        <span class="bar-val">significant</span>
-      </div>
+    <!-- 2. MEDIA ECOSYSTEMS WIDGET -->
+    <div class="infographic-card animate-on-scroll" style="padding:16px">
+      <div class="card-label" style="margin-bottom:14px">gen z media & political formation — media ecosystems view</div>
 
-      <div class="scroll-hint"><div class="scroll-dot"></div> these aren't vibes — they're measurable structural facts</div>
+<style>
+* { box-sizing: border-box; }
+.tab-bar { display: flex; gap: 6px; margin-bottom: 18px; flex-wrap: wrap; }
+.tab { padding: 6px 14px; border-radius: 20px; font-size: 13px; font-weight: 500; cursor: pointer; border: 0.5px solid var(--color-border-secondary); background: transparent; color: var(--color-text-secondary); transition: all 0.15s; }
+.tab.active { background: var(--color-text-primary); color: var(--color-background-primary); border-color: transparent; }
+.panel { display: none; }
+.panel.active { display: block; }
+.card { background: var(--color-background-primary); border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); padding: 14px 16px; margin-bottom: 12px; }
+.card-title { font-size: 14px; font-weight: 500; color: var(--color-text-primary); margin: 0 0 10px; }
+.row { display: flex; align-items: flex-start; gap: 10px; padding: 6px 0; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.row:last-child { border-bottom: none; }
+.row-label { font-size: 12px; font-weight: 500; min-width: 80px; flex-shrink: 0; padding-top: 1px; }
+.row-text { font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; flex: 1; }
+.gen-grid { display: grid; grid-template-columns: 1fr 1fr 1fr 1fr; gap: 0; border: 0.5px solid var(--color-border-tertiary); border-radius: var(--border-radius-lg); overflow: hidden; margin-bottom: 12px; }
+.gen-col { padding: 10px 12px; border-right: 0.5px solid var(--color-border-tertiary); }
+.gen-col:last-child { border-right: none; }
+.gen-header { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 6px; padding-bottom: 6px; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.gen-item { font-size: 11px; color: var(--color-text-secondary); padding: 3px 0; line-height: 1.4; border-bottom: 0.5px solid var(--color-border-tertiary); }
+.gen-item:last-child { border-bottom: none; }
+.new-badge { display: inline-block; font-size: 9px; padding: 1px 4px; border-radius: 3px; font-weight: 500; margin-left: 3px; background: #FCEBEB; color: #A32D2D; vertical-align: middle; }
+.shared-badge { display: inline-block; font-size: 9px; padding: 1px 4px; border-radius: 3px; font-weight: 500; margin-left: 3px; background: var(--color-background-secondary); color: var(--color-text-tertiary); vertical-align: middle; }
+.intensified-badge { display: inline-block; font-size: 9px; padding: 1px 4px; border-radius: 3px; font-weight: 500; margin-left: 3px; background: #FAEEDA; color: #854F0B; vertical-align: middle; }
+.media-split { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin-bottom: 12px; }
+.media-side { border-radius: var(--border-radius-lg); padding: 14px 16px; border: 0.5px solid var(--color-border-tertiary); }
+.media-men { background: var(--color-background-primary); border-left: 3px solid #378ADD; }
+.media-women { background: var(--color-background-primary); border-left: 3px solid #EF9F27; }
+.media-label { font-size: 11px; font-weight: 500; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 10px; }
+.media-men .media-label { color: #185FA5; }
+.media-women .media-label { color: #854F0B; }
+.platform-row { display: flex; align-items: center; gap: 6px; margin: 5px 0; }
+.platform-name { font-size: 12px; font-weight: 500; min-width: 80px; color: var(--color-text-primary); }
+.platform-track { flex: 1; height: 7px; background: var(--color-background-secondary); border-radius: 4px; }
+.platform-fill-m { height: 7px; border-radius: 4px; background: #378ADD; }
+.platform-fill-w { height: 7px; border-radius: 4px; background: #EF9F27; }
+.platform-note { font-size: 10px; color: var(--color-text-tertiary); min-width: 60px; text-align: right; }
+.content-item { font-size: 11px; color: var(--color-text-secondary); padding: 3px 0; display: flex; gap: 6px; align-items: flex-start; }
+.dot { width: 5px; height: 5px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+.flow-box { background: var(--color-background-secondary); border-radius: var(--border-radius-md); padding: 10px 12px; margin: 6px 0; font-size: 12px; color: var(--color-text-secondary); line-height: 1.5; }
+.flow-arrow { text-align: center; font-size: 14px; color: var(--color-text-tertiary); margin: 2px 0; }
+.highlight { color: var(--color-text-primary); font-weight: 500; }
+@media (prefers-color-scheme: dark) {
+  .new-badge { background: #501313; color: #F09595; }
+  .intensified-badge { background: #412402; color: #FAC775; }
+}
+@media (max-width: 500px) {
+  .gen-grid { grid-template-columns: 1fr 1fr; }
+  .media-split { grid-template-columns: 1fr; }
+}
+</style>
+
+<h2 class="sr-only">Gen Z vs previous generations: what's new, what's intensified, and how men and women consume political media differently</h2>
+
+<div style="padding: 0.5rem 0;">
+<div class="tab-bar">
+  <button class="tab" onclick="showTab('new')">New vs recycled</button>
+  <button class="tab active" onclick="showTab('media')">Media ecosystems</button>
+  <button class="tab" onclick="showTab('pipeline')">Radicalisation flows</button>
+  <button class="tab" onclick="showTab('class')">Class &amp; education split</button>
+</div>
+
+<!-- NEW VS RECYCLED GRIEVANCES -->
+<div class="panel" id="panel-new">
+
+  <div class="card">
+    <div class="card-title">Issues every generation has fought about — Gen Z's version is louder, not new</div>
+    <div class="gen-grid">
+      <div class="gen-col">
+        <div class="gen-header" style="color:#185FA5">Boomers</div>
+        <div class="gen-item">Nuclear war anxiety</div>
+        <div class="gen-item">Housing unaffordability (1970s–80s)</div>
+        <div class="gen-item">Unemployment / stagflation</div>
+        <div class="gen-item">Gender equality (2nd wave)</div>
+        <div class="gen-item">Anti-war protests</div>
+        <div class="gen-item">Distrust of government (post-Watergate)</div>
+      </div>
+      <div class="gen-col">
+        <div class="gen-header" style="color:#3B6D11">Gen X</div>
+        <div class="gen-item">AIDS crisis / health fear</div>
+        <div class="gen-item">Youth unemployment</div>
+        <div class="gen-item">Political cynicism (Thatcher/Reagan)</div>
+        <div class="gen-item">Culture wars (family values)</div>
+        <div class="gen-item">Environmental degradation</div>
+        <div class="gen-item">Drug/crime moral panic</div>
+      </div>
+      <div class="gen-col">
+        <div class="gen-header" style="color:#BA7517">Millennials</div>
+        <div class="gen-item">2008 crash / lost decade</div>
+        <div class="gen-item">Student debt explosion</div>
+        <div class="gen-item">Housing ladder locked out</div>
+        <div class="gen-item">Precarious work / gig economy</div>
+        <div class="gen-item">Identity politics emergence</div>
+        <div class="gen-item">Climate anxiety (first wave)</div>
+      </div>
+      <div class="gen-col">
+        <div class="gen-header" style="color:#A32D2D">Gen Z</div>
+        <div class="gen-item">Housing — worse than Millennials</div>
+        <div class="gen-item">Precarious work — but also AI threat</div>
+        <div class="gen-item">Gender politics — but gender gap wider</div>
+        <div class="gen-item">Political cynicism — deeper still</div>
+        <div class="gen-item">Climate — now existential, not future</div>
+        <div class="gen-item">Identity — but now algorithmically sorted</div>
+      </div>
+    </div>
+    <div style="font-size: 12px; color: var(--color-text-secondary); line-height: 1.6; padding-top: 8px;">The honest reading: Gen Z's material grievances are amplified versions of what Millennials faced, not new categories. What is structurally new is the information environment in which those grievances are processed — algorithm-sorted, hyper-personalised, and designed to maximise emotional engagement rather than accuracy.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">What is genuinely new — no previous generation faced these</div>
+    <div class="row">
+      <span class="row-label" style="color:#A32D2D">AI & work <span class="new-badge">New</span></span>
+      <span class="row-text">Not just automation anxiety (that's older) but the specific threat of AI replacing entry-level graduate jobs — the traditional first rung — before careers even begin. 33% drop in graduate listings in one year. Millennials entered a broken job market after 2008; Gen Z may enter one with structural AI-driven gaps in the entry level.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#A32D2D">Algorithm identity <span class="new-badge">New</span></span>
+      <span class="row-text">Political identity formed inside hyper-personalised filter bubbles from age 12–14 onward. No previous generation had their political formation mediated by engagement-optimising AI systems. Boomers formed views through shared broadcast media. Gen Z forms views through divergent algorithmic feeds — meaning two people the same age, same school, same street, now inhabit different political realities.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#A32D2D">Gender war online <span class="new-badge">New</span></span>
+      <span class="row-text">Previous generations had gender politics; none had it mediated by platforms that algorithmically sort men and women into opposite ideological ecosystems before adulthood. The gender gap in political views has existed historically but was never 21 points among the youngest cohort and growing. The mechanism — not the grievance — is new.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#854F0B">Second-gen renters <span class="intensified-badge">Intensified</span></span>
+      <span class="row-text">Gen Z is the second consecutive generation to own less than their parents at the same age. This is historically unprecedented in modern capitalism. Previous generations faced hard housing markets; none faced the realistic expectation that home ownership is structurally impossible without inheritance. The aspiration still exists (81% want to own) but the structural route has closed.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#854F0B">Compound crises <span class="intensified-badge">Intensified</span></span>
+      <span class="row-text">Gen Z has experienced overlapping structural crises — financial crash aftermath, austerity, Brexit, pandemic, cost of living shock — all before age 25. Previous generations experienced one or two formative crises. The compound nature produces a different psychological relationship to institutions: not single-event cynicism but chronic systemic distrust.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#888780">Atomisation <span class="shared-badge">Existed, worse</span></span>
+      <span class="row-text">Loneliness is not new. But Gen Z is the loneliest recorded generation, and the mechanisms are new: youth centre closures, later partnering, social media replacing in-person connection, pandemic timing during developmental years. The political consequence is that belonging needs — previously met by community, church, or union — are now met by ideological online communities, making political identity more tribal and total.</span>
+    </div>
+  </div>
+
+</div>
+
+<!-- MEDIA ECOSYSTEMS -->
+<div class="panel active" id="panel-media">
+
+  <div class="media-split">
+    <div class="media-side media-men">
+      <div class="media-label">Young men's media ecosystem</div>
+      <div class="platform-row"><span class="platform-name">YouTube</span><div class="platform-track"><div class="platform-fill-m" style="width:90%"></div></div><span class="platform-note">Primary</span></div>
+      <div class="platform-row"><span class="platform-name">Reddit</span><div class="platform-track"><div class="platform-fill-m" style="width:72%"></div></div><span class="platform-note">2× women</span></div>
+      <div class="platform-row"><span class="platform-name">X / Twitter</span><div class="platform-track"><div class="platform-fill-m" style="width:60%"></div></div><span class="platform-note">2× women</span></div>
+      <div class="platform-row"><span class="platform-name">Podcasts</span><div class="platform-track"><div class="platform-fill-m" style="width:58%"></div></div><span class="platform-note">Dominant</span></div>
+      <div class="platform-row"><span class="platform-name">Twitch</span><div class="platform-track"><div class="platform-fill-m" style="width:44%"></div></div><span class="platform-note">Gaming/news</span></div>
+      <div class="platform-row"><span class="platform-name">TikTok</span><div class="platform-track"><div class="platform-fill-m" style="width:38%"></div></div><span class="platform-note">Lower</span></div>
+      <div style="margin-top: 10px; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 8px;">
+        <div class="content-item"><div class="dot" style="background:#378ADD"></div><span>Long-form video essays (YouTube)</span></div>
+        <div class="content-item"><div class="dot" style="background:#378ADD"></div><span>Podcasts: Rogan, Peterson, political commentary</span></div>
+        <div class="content-item"><div class="dot" style="background:#378ADD"></div><span>Reddit debate threads, political subreddits</span></div>
+        <div class="content-item"><div class="dot" style="background:#378ADD"></div><span>Gaming communities (Twitch, Discord) as political entry points</span></div>
+        <div class="content-item"><div class="dot" style="background:#378ADD"></div><span>Finance/self-improvement content as gateway</span></div>
+      </div>
+      <div style="margin-top: 8px; font-size: 11px; color: var(--color-text-tertiary);">Top political issue framing: economy, immigration, personal advancement</div>
     </div>
 
-    <!-- PERSONALISE: what issue matters most -->
-    <div class="personalise-bar animate-on-scroll">
-      <div class="personalise-label">what matters most to you? see the policy lever that would actually change it ↓</div>
-      <div class="pills" id="politics-pills">
-        <button class="pill" data-issue="housing">housing</button>
-        <button class="pill" data-issue="debt">student debt</button>
-        <button class="pill" data-issue="wages">wages</button>
-        <button class="pill" data-issue="mentalhealth">mental health</button>
-        <button class="pill" data-issue="climate">climate</button>
-        <button class="pill" data-issue="democracy">democracy itself</button>
+    <div class="media-side media-women">
+      <div class="media-label">Young women's media ecosystem</div>
+      <div class="platform-row"><span class="platform-name">TikTok</span><div class="platform-track"><div class="platform-fill-w" style="width:88%"></div></div><span class="platform-note">Primary news</span></div>
+      <div class="platform-row"><span class="platform-name">Instagram</span><div class="platform-track"><div class="platform-fill-w" style="width:82%"></div></div><span class="platform-note">2× men</span></div>
+      <div class="platform-row"><span class="platform-name">Snapchat</span><div class="platform-track"><div class="platform-fill-w" style="width:65%"></div></div><span class="platform-note">Higher</span></div>
+      <div class="platform-row"><span class="platform-name">Pinterest</span><div class="platform-track"><div class="platform-fill-w" style="width:50%"></div></div><span class="platform-note">Higher</span></div>
+      <div class="platform-row"><span class="platform-name">YouTube</span><div class="platform-track"><div class="platform-fill-w" style="width:70%"></div></div><span class="platform-note">Strong</span></div>
+      <div class="platform-row"><span class="platform-name">Threads</span><div class="platform-track"><div class="platform-fill-w" style="width:40%"></div></div><span class="platform-note">Growing</span></div>
+      <div style="margin-top: 10px; border-top: 0.5px solid var(--color-border-tertiary); padding-top: 8px;">
+        <div class="content-item"><div class="dot" style="background:#EF9F27"></div><span>Short-form TikTok political commentary</span></div>
+        <div class="content-item"><div class="dot" style="background:#EF9F27"></div><span>Feminist activist creators and educators</span></div>
+        <div class="content-item"><div class="dot" style="background:#EF9F27"></div><span>Mental health, wellness as political entry</span></div>
+        <div class="content-item"><div class="dot" style="background:#EF9F27"></div><span>Instagram activism guides, infographic politics</span></div>
+        <div class="content-item"><div class="dot" style="background:#EF9F27"></div><span>Climate / Gaza / rights-based communities</span></div>
       </div>
-      <div class="result-panel" id="politics-result">
-        <div class="result-headline" id="politics-result-headline"></div>
-        <div id="politics-result-body"></div>
-      </div>
+      <div style="margin-top: 8px; font-size: 11px; color: var(--color-text-tertiary);">Top political issue framing: democracy, rights, gender equality, Gaza</div>
     </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">Vs older generations: how political information gets formed</div>
+    <div class="row">
+      <span class="row-label" style="color:#185FA5">Boomers</span>
+      <span class="row-text">Broadcast TV, national newspapers, radio. Shared information environment — same BBC news, same tabloids. Political identity formed through party affiliation and class loyalty, supplemented by local community structures (church, union, pub). Slow-moving, high-trust sources.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#3B6D11">Gen X</span>
+      <span class="row-text">TV + early internet. Began fragmentation (satellite news, early blogs). Still largely shared national media but with rising cynicism toward it. Political identity still class and geography-anchored. First generation to use the internet for information but not to form political identity through it.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#BA7517">Millennials</span>
+      <span class="row-text">Early social media (Facebook, Twitter) + blogs. Non-algorithmic feeds — you chose who you followed. Political identity shaped by 2008 crash, Iraq War, and early social media but still with residual shared sources (newspapers, mainstream sites). Last generation to form political views before the algorithm.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#A32D2D">Gen Z</span>
+      <span class="row-text">Fully algorithmic from political formation age. No shared national media environment. TikTok's For You page, YouTube recommendations, Reddit communities — all curated to individual engagement history from age 12–14. Two people same age same town now in completely different political information universes. Platform choice itself (YouTube vs TikTok) already predicts political direction.</span>
+    </div>
+    <div style="margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 10px 12px; border-radius: var(--border-radius-md);">
+      <span style="font-weight: 500; color: var(--color-text-primary);">The key shift:</span> Previous generations consumed media and formed politics. Gen Z has their politics formed <em>by</em> the media — not as passive consumption but as active algorithmic sorting into communities, identities and worldviews before they have the conceptual tools to interrogate them. Twice as many young women use TikTok as their primary news source vs young men. Young men are twice as likely to use YouTube. This single platform divergence predicts most of the political divergence.
+    </div>
+  </div>
+</div>
+
+<!-- RADICALISATION FLOWS -->
+<div class="panel" id="panel-pipeline">
+  <div class="card">
+    <div class="card-title">How young men get politically sorted — the content pathway</div>
+    <div class="flow-box"><span class="highlight">Entry:</span> Gaming, sports, comedy content on YouTube / Twitch / Reddit — apolitical starting point</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Step 1:</span> Self-improvement / finance content surfaces. "How to be successful", "how money works." Figures like Andrew Tate appear first in reaction/mocking videos, not endorsement.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Step 2:</span> Algorithm surfaces "grievance adjacent" content — male loneliness, economic unfairness, dating difficulty. Legitimate material anxieties.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Step 3:</span> Manosphere content provides a causal narrative: "feminism / progressivism caused your problems." Podcasts (Rogan, Peterson) offer longer-form ideological framing. The diagnosis feels accurate; the cause is the constructed part.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Exit points:</span> Most stop here — entertained but not ideologically captured. 5–8% who voted Trump in 2024 already show buyer's remorse. A minority continue to more extreme content via further algorithmic progression.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">How young women get politically sorted — the content pathway</div>
+    <div class="flow-box"><span class="highlight">Entry:</span> Mental health, wellness, beauty, lifestyle content on TikTok / Instagram. Begins in personal space, not political.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Step 1:</span> TikTok algorithm surfaces creators connecting personal experience to structural causes — harassment, body standards, pay gaps, reproductive rights. "The personal is political" via short-form video.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Step 2:</span> Formative political events (Dobbs ruling, #MeToo, specific elections) land inside an already-primed community that frames them immediately as political threats. Reaction is rapid and community-amplified.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Step 3:</span> Instagram activism culture ("infographic politics") + TikTok feminist commentary creates identity investment in progressive causes. LGBTQ+ community, climate, Gaza, racial justice layer in as intersecting concerns.</div>
+    <div class="flow-arrow">↓</div>
+    <div class="flow-box"><span class="highlight">Exit points:</span> Most settle in broadly progressive positioning. A smaller subset reaches more absolutist positions (4B movement, political celibacy, complete men-aversion). More likely to be high-information and high-turnout than male equivalents.</div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">The key structural difference between the two pathways</div>
+    <div class="row">
+      <span class="row-label" style="color:#378ADD">Men's path</span>
+      <span class="row-text">Begins apolitical, gets sorted into ideology by algorithmic recommendation. The community (gaming, podcasts) comes first; the politics follows. Platform is primarily YouTube/Reddit — long-form, debate-oriented, argument-based. Ideology is <em>acquired</em> through content consumption.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#EF9F27">Women's path</span>
+      <span class="row-text">Begins personal, gets connected to systemic causes by lived experience + community. The politics follows from events that directly affect them (Dobbs, #MeToo, relationship with manosphere). Platform is primarily TikTok/Instagram — short-form, identity-based, emotion-led. Ideology is <em>reinforced</em> through community belonging.</span>
+    </div>
+    <div style="margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 10px 12px; border-radius: var(--border-radius-md);">Both pathways are platform-mediated and algorithm-amplified. But the women's pathway is more likely to produce durable progressive identity because it's rooted in lived experience; the men's is more volatile because it's rooted in content consumption. This is why young men shifted toward Trump in 2024 and showed buyer's remorse by 2025, while young women's progressive identification has held steady or increased.
+    </div>
+  </div>
+</div>
+
+<!-- CLASS & EDUCATION SPLIT -->
+<div class="panel" id="panel-class">
+  <div class="card">
+    <div class="card-title">The most underreported divide: class and education fracture within Gen Z</div>
+    <div class="row">
+      <span class="row-label" style="color:#3B6D11">Graduate Gen Z</span>
+      <span class="row-text">More likely to be optimistic (70% in work vs 44% unemployed), more likely to vote, more likely to engage with structured political arguments, more likely to follow the green-left pipeline. University acts as an institutional amplifier of progressive identity. Primarily TikTok/Instagram users. More likely to frame issues in terms of rights and systemic causes.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#A32D2D">Non-graduate Gen Z</span>
+      <span class="row-text">More economically precarious, more likely to abstain from voting, less likely to feel their vote makes a difference. Less likely to use TikTok's political content ecosystem; more likely to use YouTube and gaming spaces. More likely to frame issues in terms of personal economic survival. The group most likely to vote Reform if they vote at all — but mostly they don't vote.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#534AB7">Employed vs unemployed</span>
+      <span class="row-text">Employment status predicts optimism more than gender, ideology or media consumption. 70% of employed young people are optimistic about their future vs 44% of the unemployed. Politically, employed Gen Z engages more; unemployed Gen Z is the most likely to disengage entirely. The "politically homeless" — who show up in no party's data — are concentrated in unemployed, non-graduate, non-homeowning young people.</span>
+    </div>
+    <div class="row">
+      <span class="row-label" style="color:#BA7517">Regional split</span>
+      <span class="row-text">London Gen Z inhabits a different political universe from Northern or rural Gen Z. 53% of low-income young people in London experience housing stress. The London-centric media and political conversation about Gen Z (graduate, progressive, climate-focused, TikTok-native) describes a minority. Most Gen Z outside major cities are more immediately focused on economic survival than identity politics.</span>
+    </div>
+    <div style="margin-top: 10px; font-size: 12px; color: var(--color-text-secondary); background: var(--color-background-secondary); padding: 10px 12px; border-radius: var(--border-radius-md);">
+      <span style="font-weight: 500; color: var(--color-text-primary);">The John Smith Centre's core finding:</span> the differences within Gen Z — by class, education, region, ethnicity and gender — are now larger than the differences between Gen Z and older generations. The generation war framing is obsolete. The real story is class and opportunity fracture within a single cohort.
+    </div>
+  </div>
+</div>
+
+</div>
+<script>
+function showTab(id) {
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+  document.getElementById('panel-' + id).classList.add('active');
+  event.target.classList.add('active');
+}
+</script>
+
+    </div>
+
+
   </section>
 </div>
 
@@ -956,7 +1242,7 @@
       yearsData.push(row.paidOffYear || 30);
     });
 
-    // Height scales with number of careers so bars don't squash
+    // Height scales with number of careers so bars don\'t squash
     var wrap = document.getElementById('career-chart-wrap');
     if (wrap) wrap.style.height = Math.max(200, activeCareerKeys.length * 52) + 'px';
 
@@ -1183,6 +1469,237 @@
   }
 
 
+  // ── POLITICS EXPANDABLE CARDS ──────────────────────────────────────────────
+  var issueCards = [
+    {
+      title: 'Housing & ownership',
+      subtitle: 'The defining material grievance',
+      gender: 'shared',
+      accentColor: '#1D9E75',
+      headline: '8.3×',
+      headlineLabel: 'home cost vs annual income (England)',
+      stats: [
+        { text: 'Average home costs vs annual income (England)', val: '8.3×', g: '' },
+        { text: 'Same ratio in 1998', val: '3.7×', g: '' },
+        { text: 'Gen Z who want to own a home', val: '81%', g: '' },
+        { text: '20–24-year-olds living with parents (2021 census, up from 44% in 2011)', val: '51%', g: '' },
+        { text: 'Under-25s who own their own home (down from 24% two decades ago)', val: '10%', g: '' },
+        { text: 'Under-30s spending 30%+ of income on rent', val: '>30%', g: '' },
+      ],
+      note: 'Housing is the one issue where the political response diverges sharply by gender: young women rank it a top-3 concern more than young men, who rank immigration above it. But both equally cannot afford to buy.'
+    },
+    {
+      title: 'Economy, work & financial survival',
+      subtitle: 'The dominant daily anxiety',
+      gender: 'shared',
+      accentColor: '#EF9F27',
+      headline: '37%',
+      headlineLabel: 'rank financial worries as top personal anxiety',
+      stats: [
+        { text: 'Financial worries — top personal anxiety (UK Youth Poll 2025)', val: '37%', g: '' },
+        { text: 'Work pressures as top anxiety', val: '23%', g: '' },
+        { text: 'Job insecurity as top anxiety', val: '20%', g: '' },
+        { text: 'Graduate job listings down vs year prior — lowest since 2018', val: '−33%', g: '' },
+        { text: 'Young people "struggling to live" on current income (record high)', val: '26%', g: '' },
+        { text: 'Employed young people optimistic about personal future', val: '70%', g: '' },
+        { text: 'Unemployed young people optimistic about personal future', val: '44%', g: '' },
+      ],
+      note: '"In the interviews, young people were talking about how they are simply surviving until the end of the week. The idea of building a career was something for the future." — John Smith Centre director'
+    },
+    {
+      title: 'Mental health',
+      subtitle: 'Personal crisis, political issue',
+      gender: 'women',
+      accentColor: '#D4537E',
+      headline: '1 in 3',
+      headlineLabel: 'sought medical help for depression in past 3 years',
+      stats: [
+        { text: 'Young people who have sought medical help for depression in past 3 years', val: '1 in 3', g: '' },
+        { text: 'Who say Covid had lasting negative effects on their mental health', val: '1 in 3', g: '' },
+        { text: 'Mental health ranked top-2 issue for young people (ITV/Savanta poll)', val: 'Top 2', g: '' },
+        { text: 'Council-funded youth centres in England closed since 2010', val: '2/3', g: '' },
+        { text: 'Young people affected by youth centre closures performing worse at GCSEs', val: '−4%', g: '' },
+        { text: 'Women report higher social media harassment & body image pressure', val: '↑ sig.', g: 'women' },
+      ],
+      note: 'Mental health sits at the intersection of economic precarity and social isolation — young people are clear these are structural problems, not personal failings. The loss of community infrastructure (youth centres, local spaces) is a direct policy cause.'
+    },
+    {
+      title: 'Immigration',
+      subtitle: 'The issue that splits hardest by gender',
+      gender: 'men',
+      accentColor: '#3B82F6',
+      headline: '15pt',
+      headlineLabel: 'gender gap — the biggest issue divergence in UK Gen Z politics',
+      stats: [
+        { text: 'Young men 16–25 ranking immigration a top-3 concern', val: '37%', g: 'men' },
+        { text: 'Young women 16–25 ranking immigration a top-3 concern', val: '22%', g: 'women' },
+        { text: 'Single men ranking immigration a top-3 concern', val: '37%', g: 'men' },
+        { text: 'Single women ranking immigration a top-3 concern', val: '21%', g: 'women' },
+        { text: 'Gen Z overall who say immigration has changed communities for the better', val: '51%', g: '' },
+        { text: 'Young voters who said they\'d vote to rejoin the EU (ITV poll)', val: '87%', g: '' },
+      ],
+      note: 'A 15-point gender gap on immigration is the single biggest issue divergence in UK Gen Z politics. Young men\'s immigration concern correlates with Reform support; young women overall are pro-immigration and anti-Brexit. Both views co-exist within the same generation.'
+    },
+    {
+      title: 'Gender, identity & culture war',
+      subtitle: 'Where the gap is widest',
+      gender: 'split',
+      accentColor: '#7F77DD',
+      headline: '67%',
+      headlineLabel: 'say toxic masculinity is becoming more common',
+      stats: [
+        { text: 'Gen Z who say toxic masculinity is becoming more common', val: '67%', g: '' },
+        { text: 'Young women identifying as feminist (globally)', val: '53%', g: 'women' },
+        { text: 'Young men identifying as feminist (globally)', val: '32%', g: 'men' },
+        { text: 'Gen Z men agreeing equality demands have "gone too far"', val: '60%', g: 'men' },
+        { text: 'Gen Z women agreeing same', val: '38%', g: 'women' },
+        { text: 'Gen Z divided on whether feminism has "done more harm than good"', val: '42% / 45%', g: '' },
+        { text: 'UK ranking for gender tension perception (26th of 30 nations)', val: '40%', g: '' },
+      ],
+      note: 'Despite the noise, Britain ranks near the bottom globally for perceived gender tension — 18 points below the US, 36 below South Korea. The divide is real but is being amplified by algorithm-driven content ecosystems more than by street-level reality.'
+    },
+    {
+      title: 'Climate & environment',
+      subtitle: 'Cared about — but not the daily crisis',
+      gender: 'women',
+      accentColor: '#1D9E75',
+      headline: '66%',
+      headlineLabel: 'believe environment should take priority over economic growth',
+      stats: [
+        { text: 'Gen Z ranking climate as top personal anxiety', val: '10%', g: '' },
+        { text: 'Gen Z who believe environment should take priority over economic growth', val: '66%', g: '' },
+        { text: 'Baby Boomers who believe same', val: '44%', g: '' },
+        { text: 'Young women 16–25 ranking Gaza a top-3 concern (above climate & immigration)', val: '31%', g: 'women' },
+        { text: 'Young men 16–25 ranking Gaza a top-3 concern', val: '22%', g: 'men' },
+      ],
+      note: 'Climate anxiety exists but is not the acute daily grievance. Young people support action overwhelmingly in the abstract but deprioritise it when set against housing or income. Gaza is a bigger activating issue for young women than climate is — a striking finding specific to 2024–25.'
+    },
+    {
+      title: 'Democracy & institutions',
+      subtitle: 'Support the idea, distrust the reality',
+      gender: 'shared',
+      accentColor: '#888780',
+      headline: '63%',
+      headlineLabel: 'say democracy in the UK is "in trouble"',
+      stats: [
+        { text: 'Young people who say democracy in the UK is "in trouble"', val: '63%', g: '' },
+        { text: 'Support democracy over dictatorship', val: '57% vs 27%', g: '' },
+        { text: 'Who think British politics has become too divided', val: '72%', g: '' },
+        { text: '18–25s with no trust in politics (ITV/Savanta)', val: '2 in 3', g: '' },
+        { text: 'Who say politicians don\'t care about them', val: '>50%', g: '' },
+        { text: 'Who think civil disobedience is important when opposing government', val: '43%', g: '' },
+        { text: 'Who think the law should always be obeyed (vs 32%+ for all older generations)', val: '16%', g: '' },
+      ],
+      note: 'The gap between valuing democracy and trusting democratic institutions is the defining tension. Gen Z believes in the concept but sees the current system as captured by older voters\' interests — structurally correct, given turnout ratios.'
+    },
+    {
+      title: 'Social media & tech',
+      subtitle: 'Self-aware about the harm',
+      gender: 'shared',
+      accentColor: '#534AB7',
+      headline: '67%',
+      headlineLabel: 'support banning social media for under-16s',
+      stats: [
+        { text: 'Young people who support banning social media for under-16s', val: '67%', g: '' },
+        { text: 'Young people ranking social media as top personal anxiety', val: '14%', g: '' },
+        { text: 'Who say toxic masculinity fuelled by social media algorithms', val: 'sig. majority', g: '' },
+        { text: 'Women reporting higher harassment and body image pressure online', val: '↑ marked', g: 'women' },
+        { text: 'Young people who say AI threatens future job security', val: '↑ rising', g: '' },
+      ],
+      note: 'The 67% figure for banning social media for under-16s is striking — this is a generation that grew up on these platforms actively calling for limits on them. They distinguish between the value of connectivity and the harm of algorithmic amplification.'
+    },
+    {
+      title: 'Racism, belonging & identity',
+      subtitle: 'Strong consensus on recognition',
+      gender: 'shared',
+      accentColor: '#E24B4A',
+      headline: '73%',
+      headlineLabel: 'believe racism is a significant issue in UK society',
+      stats: [
+        { text: 'Gen Z who believe racism is a significant issue in UK society', val: '73%', g: '' },
+        { text: 'Who say immigration has changed their communities for the better', val: '51%', g: '' },
+        { text: 'Who would vote to rejoin the EU', val: '87%', g: '' },
+        { text: 'Black Britons citing cost of living as top issue (vs 53% general pop.)', val: '73%', g: '' },
+        { text: 'Young people of colour more likely to say they didn\'t vote due to structural barriers', val: '17% vs 10%', g: '' },
+      ],
+      note: '73% on racism is higher than most expect — and holds across gender. The political expression of this concern differs: it channels into Green/Labour voting for women, and into more fragmented or abstaining behaviour for young men from ethnic minority backgrounds.'
+    },
+  ];
+
+  function renderPoliticsCards() {
+    var container = document.getElementById('politics-cards');
+    if (!container) return;
+
+    issueCards.forEach(function(card, idx) {
+      var el = document.createElement('div');
+      el.className = 'issue-card';
+
+      var genderLabel = card.gender === 'men' ? '<span class="gender-tag gt-men">Men more</span>'
+                      : card.gender === 'women' ? '<span class="gender-tag gt-women">Women more</span>'
+                      : card.gender === 'split' ? '<span class="gender-tag gt-men">Men</span><span class="gender-tag gt-women">Women opposite</span>'
+                      : '<span class="gender-tag gt-shared">Shared</span>';
+
+      var statsHtml = card.stats.map(function(s) {
+        var gtag = s.g === 'men' ? '<span class="gender-tag gt-men">M</span>'
+                 : s.g === 'women' ? '<span class="gender-tag gt-women">W</span>' : '';
+        return '<div class="issue-stat-row"><span class="issue-stat-text">' + s.text + gtag + '</span><span class="issue-stat-num">' + s.val + '</span></div>';
+      }).join('');
+
+      el.innerHTML = '<div class="issue-card-header" onclick="toggleCard(this)">'
+        + '<div class="issue-card-left">'
+        + '<div class="issue-card-accent" style="background:' + card.accentColor + '"></div>'
+        + '<div><div class="issue-card-title">' + card.title + '</div>'
+        + '<div class="issue-card-subtitle">' + card.subtitle + ' ' + genderLabel + '</div></div>'
+        + '</div>'
+        + '<div class="issue-card-headline"><div class="hn" style="color:' + card.accentColor + '">' + card.headline + '</div><div class="hl">' + card.headlineLabel + '</div></div>'
+        + '<div class="issue-card-chevron">&#9660;</div>'
+        + '</div>'
+        + '<div class="issue-card-body">'
+        + statsHtml
+        + '<div class="issue-note">' + card.note + '</div>'
+        + '</div>';
+
+      container.appendChild(el);
+    });
+  }
+
+  function toggleCard(header) {
+    var chevron = header.querySelector('.issue-card-chevron');
+    var body = header.nextElementSibling;
+    var isOpen = body.classList.contains('open');
+    body.classList.toggle('open', !isOpen);
+    chevron.classList.toggle('open', !isOpen);
+  }
+  window.toggleCard = toggleCard;
+
+
+  // "What\'s genuinely new" items
+  var newItems = [
+    { label: 'AI & work', tag: 'New', tagColor: '#D4537E', body: 'Not just automation anxiety (that\'s older) but the specific threat of AI replacing entry-level graduate jobs — the traditional first rung — before careers even begin. 33% drop in graduate listings in one year. Millennials entered a broken job market after 2008; Gen Z may enter one with structural AI-driven gaps in the entry level.' },
+    { label: 'Algorithm identity', tag: 'New', tagColor: '#D4537E', body: 'Political identity formed inside hyper-personalised filter bubbles from age 12–14 onward. No previous generation had their political formation mediated by engagement-optimising AI systems. Boomers formed views through shared broadcast media. Gen Z forms views through divergent algorithmic feeds — meaning two people the same age, same school, same street, now inhabit different political realities.' },
+    { label: 'Gender war online', tag: 'New', tagColor: '#D4537E', body: 'Previous generations had gender politics; none had it mediated by platforms that algorithmically sort men and women into opposite ideological ecosystems before adulthood. The gender gap in political views has existed historically but was never 21 points among the youngest cohort and growing. The mechanism — not the grievance — is new.' },
+    { label: 'Second-gen renters', tag: 'Intensified', tagColor: '#EF9F27', body: 'Gen Z is the second consecutive generation to own less than their parents at the same age. This is historically unprecedented in modern capitalism. Previous generations faced hard housing markets; none faced the realistic expectation that home ownership is structurally impossible without inheritance. The aspiration still exists (81% want to own) but the structural route has closed.' },
+    { label: 'Compound crises', tag: 'Intensified', tagColor: '#EF9F27', body: 'Gen Z has experienced overlapping structural crises — financial crash aftermath, austerity, Brexit, pandemic, cost of living shock — all before age 25. Previous generations experienced one or two formative crises. The compound nature produces a different psychological relationship to institutions: not single-event cynicism but chronic systemic distrust.' },
+    { label: 'Atomisation', tag: 'Existed, worse', tagColor: '#888780', body: 'Loneliness is not new. But Gen Z is the loneliest recorded generation, and the mechanisms are new: youth centre closures, later partnering, social media replacing in-person connection, pandemic timing during developmental years. The political consequence is that belonging needs — previously met by community, church, or union — are now met by ideological online communities, making political identity more tribal and total.' },
+  ];
+
+  (function() {
+    var list = document.getElementById('new-issues-list');
+    if (!list) return;
+    newItems.forEach(function(item, i) {
+      var row = document.createElement('div');
+      row.style.cssText = 'display:flex;gap:16px;padding:14px 16px;border-bottom:' + (i < newItems.length - 1 ? '0.5px solid var(--border)' : 'none') + ';align-items:flex-start';
+      row.innerHTML = '<div style="flex-shrink:0;width:120px">'
+        + '<div style="font-size:13px;font-weight:500;color:var(--text-primary);margin-bottom:5px">' + item.label + '</div>'
+        + '<div style="display:inline-block;font-size:10px;font-weight:600;padding:2px 8px;border-radius:20px;background:' + item.tagColor + '1A;color:' + item.tagColor + ';border:0.5px solid ' + item.tagColor + '40">' + item.tag + '</div>'
+        + '</div>'
+        + '<div style="flex:1;font-size:13px;color:var(--text-secondary);line-height:1.65">' + item.body + '</div>';
+      list.appendChild(row);
+    });
+  })();
+
+  renderPoliticsCards();
+
   // ── Active nav link on scroll ────────────────────────────────────────────────
   const sections = document.querySelectorAll('.chapter');
   const navLinks = document.querySelectorAll('.nav-link');
@@ -1359,18 +1876,6 @@
   };
 
   setupPills('dating-pills', 'active-dating', datingData, 'dating-result', 'dating-result-headline', 'dating-result-body');
-
-  // POLITICS — Source: Resolution Foundation / YouGov / IFS data from youth challenges research
-  const politicsData = {
-    'housing':     { headline: 'reform planning. build more. it\'s not complicated.', body: 'The Resolution Foundation calculates rising housing costs account for over half the decline in fertility rates. The policy fix is well understood: reform planning law to allow more building, especially near transit. What\'s missing is political will, because existing homeowners vote in higher numbers.' },
-    'debt':        { headline: '84% of graduates would change their vote for this.', body: 'A survey found fairer student loan policies would change how 84% of graduates vote. In Australia, a 20% student debt cut helped deliver an unexpected election majority. In Canada, the 2024 budget was literally titled "Fairness for Every Generation." The UK is behind.' },
-    'wages':       { headline: 'close the age pay gap. it\'s currently legal to pay under-25s less.', body: 'Until recently, workers aged 16–20 received minimum wage rises half the size of older workers for the same work. This is a policy choice, not a law of economics. A unified minimum wage regardless of age is a single legislative change.' },
-    'mentalhealth':{ headline: 'double CAMHS funding from 1% to 2% of NHS budget.', body: 'The UK spends ~1% of the NHS budget on children and young people\'s mental health. Most experts recommend a minimum of 2%. The cost is known. The benefit is quantifiable. It\'s a spending decision, not a mystery.' },
-    'climate':     { headline: 'the people blocking action are mostly over 55.', body: 'Support for strong climate policy is highest among under-35s across every poll. Opposition is concentrated among older cohorts who dominate turnout. Higher youth turnout in local and national elections directly shifts which candidates win safe seats.' },
-    'democracy':   { headline: 'the vicious circle is breakable — but only by showing up.', body: 'If young people don\'t vote, politicians ignore them, policies skew older, disillusionment grows. Around 60% of young people believe democracy is broken. The irony: the fix is participation. Age is now the strongest predictor of voting behaviour in the UK — which means a voting bloc exists, waiting to be activated.' },
-  };
-
-  setupPills('politics-pills', 'active-politics', politicsData, 'politics-result', 'politics-result-headline', 'politics-result-body');
 
   function setupPills(pillsId, activeClass, dataMap, resultId, headlineId, bodyId) {
     const container = document.getElementById(pillsId);
